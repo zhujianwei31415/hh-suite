@@ -1,4 +1,5 @@
 #include "hhutil.h"
+#include <memory>
 
 /////////////////////////////////////////////////////////////////////////////////////
 // Errors
@@ -39,9 +40,9 @@ int InternalError(const char errstr[], const char* file, const int line, const c
 /////////////////////////////////////////////////////////////////////////////////////
 // Count number of lines in <file>
 /////////////////////////////////////////////////////////////////////////////////////
-int CountLinesInFile(const char* file)
-{
-  char line[LINELEN]="";         // input line
+int CountLinesInFile(const char* file) {
+  std::unique_ptr<char[]> line_ptr(new char[LINELEN]);
+  char* line = line_ptr.get();
   int numlines=0;
   char tmp_file[NAMELEN];
   strcpy(tmp_file, file);
